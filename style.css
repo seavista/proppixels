@@ -1,0 +1,98 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    cursor: all-scroll;
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: transparent;
+
+  }
+
+#flashOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none; /* This makes sure the overlay doesn't interfere with any interactions */
+    transition: opacity 0.1s ease-in-out;
+    z-index: 10;
+}
+
+
+
+.video-background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5); /* black with 50% transparency */
+    z-index: 1;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+    z-index: -1;
+}
+
+@media screen and (max-aspect-ratio: 16/9) {
+    .video-background {
+        width: 177.78vh; /* 16/9 aspect ratio in vertical */
+        height: 100vh;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.video-background iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.logo {
+    width: 400px; /* Adjust according to your logo's size */
+    margin-bottom: 50px;
+    transition: transform 0.3s ease-out;
+}
+
+
+
+.social-links {
+    display: flex;
+    gap: 20px; /* Adjust for spacing between icons */
+}
+
+.social-links a img {
+    width: 30px; /* Adjust for the desired icon size */
+    transition: 0.3s;
+}
+
+.social-links a img:hover {
+    transform: scale(1.1); /* subtle hover effect */
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prop Pixels | Drone Photography, Photogrmmetry and Mapping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+    
+</head>
+<body>
+    <audio id="shutterSound" src="camera.mp3" preload="auto"></audio>
+    <audio id="droneSound" src="drone.mp3" preload="auto" autoplay loop></audio>
+    <div id="flashOverlay"></div>
+
+    <div class="video-background">
+        <iframe src="https://www.youtube.com/embed/ZEONt08mmHU?autoplay=1&mute=1&controls=0&loop=1&playlist=ZEONt08mmHU"
+                frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="content">
+        <img src="drone.png" alt="Prop Pixels" id="drone"  class="logo">
+        <img src="logo.png" alt="Prop Pixels" class="logo">
+
+        <div class="social-links">
+            <a href="https://www.youtube.com/@proppixels" target="_blank">
+                <img src="youtube-icon.png" alt="YouTube">
+            </a>
+            <a href="https://www.facebook.com/proppixels/" target="_blank">
+                <img src="facebook-icon.png" alt="Facebook">
+            </a>
+            <a href="#" target="_blank">
+                <img src="twitter-icon.png" alt="Twitter">
+            </a>
+            <a href="#" target="_blank">
+                <img src="tiktok-icon.png" alt="TikTok">
+            </a>
+        </div>
+    </div>
+
+    <script>
+
+let droneSound = document.getElementById("droneSound");
+droneSound.volume = 0.3;
+
+    function cameraEffect() {
+        const video = document.querySelector('.video-background');
+        const flashOverlay = document.getElementById('flashOverlay');
+        const shutterSound = document.getElementById('shutterSound');
+
+        // Toggle video opacity
+        const currentOpacity = window.getComputedStyle(video).opacity;
+       // video.style.opacity = currentOpacity === '1' ? '0.5' : '1';
+
+        // Play shutter sound
+        shutterSound.play();
+
+        // Trigger the flash
+        flashOverlay.style.opacity = '1';
+
+        // Use another setTimeout to ensure the first style change is applied
+        setTimeout(() => {
+            // Hide the flash after a short duration
+            setTimeout(() => {
+                flashOverlay.style.opacity = '0';
+            }, 100);
+        }, 10);  // This small delay ensures that the opacity set to '1' is acknowledged
+    }
+
+    function isOverlapping(rect1, rect2) {
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+    }
+
+
+
+
+
+
+
+
+        let logo = document.querySelector('.logo');
+        let socialLinks = document.querySelectorAll('.social-links a');
+
+      
+
+
+        // Example: call cameraEffect on a button click
+        document.getElementById('drone').addEventListener('click', cameraEffect);
+
+
+    
+        // Function to move the logo based on mouse position
+        document.addEventListener('mousemove', function(e) {
+            let mouseX = e.clientX;
+            let mouseY = e.clientY;
+            let logoX = window.innerWidth / 2;  // Assuming logo starts at the center of the screen
+            let logoY = window.innerHeight / 2; 
+    
+            // Calculate the distance to move. The division values dictate the speed of the movement
+            let moveX = (logoX - mouseX) / 1;
+            let moveY = (logoY - mouseY) / 1;
+    
+            logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+
+        document.addEventListener('touchmove', function(e) {
+    // Prevents the default scrolling behavior on touch move
+    e.preventDefault();
+    
+    // Extracting the touch coordinates
+    let touchX = e.touches[0].clientX;
+    let touchY = e.touches[0].clientY;
+
+    let logoX = window.innerWidth / 2;
+    let logoY = window.innerHeight / 2;
+
+    // Calculating movement for the logo. Adjust the division values for desired movement sensitivity.
+    let moveX = (logoX - touchX) / 15;  // Made it slightly more sensitive than mouse movement for better mobile response
+    let moveY = (logoY - touchY) / 15;
+
+    logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
+});
+
+    
+        // Function to make the logo hover up when hovering over a social link
+        socialLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                logo.style.transform = 'translateY(-30px)';  // Adjust value for desired hover height
+            });
+    
+            link.addEventListener('mouseleave', function() {
+                logo.style.transform = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
